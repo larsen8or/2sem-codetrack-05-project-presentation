@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Modern Image Gallery</h1>
+            <p>A beautiful collection of images</p>
+        </header>
+        
+        <main>
+            <div id="gallery" class="gallery">
+                <!-- Gallery items will be dynamically generated here -->
+            </div>
+            
+            <!-- Modal for full-size image viewing -->
+            <div id="modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="modal-image">
+                <div class="modal-caption" id="modal-caption"></div>
+                <div class="modal-navigation">
+                    <button id="prev-btn" class="nav-btn">&#8249;</button>
+                    <button id="next-btn" class="nav-btn">&#8250;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
