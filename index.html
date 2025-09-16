@@ -14,18 +14,21 @@
         </header>
         
         <main>
-            <div id="gallery" class="gallery">
-                <!-- Gallery items will be dynamically generated here -->
-            </div>
-            
-            <!-- Modal for full-size image viewing -->
-            <div id="modal" class="modal">
-                <span class="close">&times;</span>
-                <img class="modal-content" id="modal-image">
-                <div class="modal-caption" id="modal-caption"></div>
-                <div class="modal-navigation">
-                    <button id="prev-btn" class="nav-btn">&#8249;</button>
-                    <button id="next-btn" class="nav-btn">&#8250;</button>
+            <div class="gallery-widget">
+                <!-- Main featured image display -->
+                <div class="main-display">
+                    <img id="main-image" class="main-image" alt="Featured image">
+                    <div class="main-image-info">
+                        <h2 id="main-title" class="main-title"></h2>
+                        <p id="main-description" class="main-description"></p>
+                    </div>
+                </div>
+                
+                <!-- Thumbnail navigation -->
+                <div class="thumbnail-container">
+                    <div id="thumbnails" class="thumbnails">
+                        <!-- Thumbnail images will be dynamically generated here -->
+                    </div>
                 </div>
             </div>
         </main>

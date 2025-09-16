@@ -1,6 +1,6 @@
 /**
- * Modern Image Gallery
- * Maintainable JavaScript implementation with image array management
+ * Modern Image Gallery Widget
+ * Maintainable JavaScript implementation with large image display and thumbnails
  */
 
 class ImageGallery {
@@ -18,7 +18,7 @@ class ImageGallery {
                 description: 'A mystical forest path winding through ancient trees, inviting adventurers to explore the hidden secrets and natural wonders that lie ahead.'
             },
             {
-                src: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9Im9jZWFuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDA5NGZmO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAyNjJhMztzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI29jZWFuKSIvPjxwYXRoIGQ9Ik0wLDIwMCBRMTAwLDE4MCAyMDAsMjAwIFQzMDAsMjAwIFQ0MDAsMjIwIEw0MDAsMzAwIEwwLDMwMCBaIiBmaWxsPSIjOTFkNWZmIiBvcGFjaXR5PSIwLjciLz48cGF0aCBkPSJNMCwyMjAgUTEwMCwyMDAgMjAwLDIyMCBUMzAwLDIyMCBUNDAwLDI0MCBMNDAWM0hwMEwwLDMwMCBaIiBmaWxsPSIjNjRiNWY2IiBvcGFjaXR5PSIwLjUiLz48dGV4dCB4PSI1MCUiIHk9IjQwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjRweCIgZm9udC1mYW1pbHk9IkFyaWFsIj5PY2VhbjwvdGV4dD48L3N2Zz4=',
+                src: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9Im9jZWFuIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDA5NGZmO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAyNjJhMztzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI29jZWFuKSIvPjxwYXRoIGQ9Ik0wLDIwMCBRMTAwLDE4MCAyMDAsMjAwIFQzMDAsMjAwIFQ0MDAsMjIwIEw0MDAsMzAwIEwwLDMwMCBaIiBmaWxsPSIjOTFkNWZmIiBvcGFjaXR5PSIwLjciLz48cGF0aCBkPSJNMCwyMjAgUTEwMCwyMDAgMjAwLDIyMCBUMzAwLDIyMCBUNDAwLDI0MCBMNDAWM0gwMEwwLDMwMCBaIiBmaWxsPSIjNjRiNWY2IiBvcGFjaXR5PSIwLjUiLz48dGV4dCB4PSI1MCUiIHk9IjQwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjRweCIgZm9udC1mYW1pbHk9IkFyaWFsIj5PY2VhbjwvdGV4dD48L3N2Zz4=',
                 title: 'Ocean Waves',
                 description: 'Crystal clear turquoise waters meeting pristine sandy shores, capturing the eternal dance between land and sea in perfect harmony.'
             },
@@ -35,10 +35,10 @@ class ImageGallery {
         ];
         
         this.currentImageIndex = 0;
-        this.galleryContainer = document.getElementById('gallery');
-        this.modal = document.getElementById('modal');
-        this.modalImage = document.getElementById('modal-image');
-        this.modalCaption = document.getElementById('modal-caption');
+        this.mainImage = document.getElementById('main-image');
+        this.mainTitle = document.getElementById('main-title');
+        this.mainDescription = document.getElementById('main-description');
+        this.thumbnailsContainer = document.getElementById('thumbnails');
         
         this.init();
     }
@@ -48,7 +48,8 @@ class ImageGallery {
      */
     init() {
         this.validateImages();
-        this.renderGallery();
+        this.renderThumbnails();
+        this.displayImage(0);
         this.setupEventListeners();
     }
     
@@ -64,156 +65,149 @@ class ImageGallery {
     }
     
     /**
-     * Render the gallery items
+     * Render the thumbnail navigation
      */
-    renderGallery() {
-        this.galleryContainer.innerHTML = '';
+    renderThumbnails() {
+        this.thumbnailsContainer.innerHTML = '';
         
         this.images.forEach((image, index) => {
-            const galleryItem = this.createGalleryItem(image, index);
-            this.galleryContainer.appendChild(galleryItem);
-            
-            // Add loading animation with stagger effect
-            setTimeout(() => {
-                galleryItem.classList.add('loading');
-            }, index * 100);
+            const thumbnail = this.createThumbnail(image, index);
+            this.thumbnailsContainer.appendChild(thumbnail);
         });
     }
     
     /**
-     * Create a single gallery item element
+     * Create a single thumbnail element
      * @param {Object} image - Image data object
      * @param {number} index - Image index
-     * @returns {HTMLElement} Gallery item element
+     * @returns {HTMLElement} Thumbnail element
      */
-    createGalleryItem(image, index) {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.setAttribute('data-index', index);
-        item.setAttribute('tabindex', '0');
-        item.setAttribute('role', 'button');
-        item.setAttribute('aria-label', `View ${image.title} in full size`);
+    createThumbnail(image, index) {
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'thumbnail';
+        thumbnail.setAttribute('data-index', index);
+        thumbnail.setAttribute('tabindex', '0');
+        thumbnail.setAttribute('role', 'button');
+        thumbnail.setAttribute('aria-label', `View ${image.title}`);
         
-        item.innerHTML = `
-            <img src="${image.src}" alt="${image.title}" loading="lazy">
-            <div class="gallery-item-content">
-                <h3>${image.title}</h3>
-                <p>${image.description}</p>
-            </div>
-        `;
+        const img = document.createElement('img');
+        img.src = image.src;
+        img.alt = image.title;
+        img.loading = 'lazy';
         
-        return item;
+        thumbnail.appendChild(img);
+        return thumbnail;
+    }
+    
+    /**
+     * Display a specific image in the main view
+     * @param {number} index - Index of image to display
+     */
+    displayImage(index) {
+        if (index < 0 || index >= this.images.length) return;
+        
+        const image = this.images[index];
+        this.currentImageIndex = index;
+        
+        // Update main image with fade transition
+        this.mainImage.style.opacity = '0.5';
+        
+        setTimeout(() => {
+            this.mainImage.src = image.src;
+            this.mainImage.alt = image.title;
+            this.mainTitle.textContent = image.title;
+            this.mainDescription.textContent = image.description;
+            this.mainImage.style.opacity = '1';
+        }, 150);
+        
+        // Update thumbnail active states
+        this.updateThumbnailStates();
+    }
+    
+    /**
+     * Update active states of thumbnails
+     */
+    updateThumbnailStates() {
+        const thumbnails = this.thumbnailsContainer.querySelectorAll('.thumbnail');
+        thumbnails.forEach((thumbnail, index) => {
+            if (index === this.currentImageIndex) {
+                thumbnail.classList.add('active');
+                thumbnail.setAttribute('aria-selected', 'true');
+            } else {
+                thumbnail.classList.remove('active');
+                thumbnail.setAttribute('aria-selected', 'false');
+            }
+        });
     }
     
     /**
      * Setup all event listeners
      */
     setupEventListeners() {
-        // Gallery item clicks
-        this.galleryContainer.addEventListener('click', (e) => {
-            const galleryItem = e.target.closest('.gallery-item');
-            if (galleryItem) {
-                const index = parseInt(galleryItem.getAttribute('data-index'));
-                this.openModal(index);
+        // Thumbnail clicks
+        this.thumbnailsContainer.addEventListener('click', (e) => {
+            const thumbnail = e.target.closest('.thumbnail');
+            if (thumbnail) {
+                const index = parseInt(thumbnail.getAttribute('data-index'));
+                this.displayImage(index);
             }
         });
         
-        // Keyboard navigation for gallery items
-        this.galleryContainer.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                const galleryItem = e.target.closest('.gallery-item');
-                if (galleryItem) {
-                    e.preventDefault();
-                    const index = parseInt(galleryItem.getAttribute('data-index'));
-                    this.openModal(index);
-                }
-            }
-        });
-        
-        // Modal close button
-        document.querySelector('.close').addEventListener('click', () => {
-            this.closeModal();
-        });
-        
-        // Modal navigation buttons
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            this.navigateModal(-1);
-        });
-        
-        document.getElementById('next-btn').addEventListener('click', () => {
-            this.navigateModal(1);
-        });
-        
-        // Keyboard navigation for modal
-        document.addEventListener('keydown', (e) => {
-            if (this.modal.style.display === 'block') {
+        // Keyboard navigation for thumbnails
+        this.thumbnailsContainer.addEventListener('keydown', (e) => {
+            const thumbnail = e.target.closest('.thumbnail');
+            if (thumbnail) {
+                const index = parseInt(thumbnail.getAttribute('data-index'));
+                
                 switch (e.key) {
-                    case 'Escape':
-                        this.closeModal();
-                        break;
-                    case 'ArrowLeft':
-                        this.navigateModal(-1);
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        this.displayImage(index);
                         break;
                     case 'ArrowRight':
-                        this.navigateModal(1);
+                        e.preventDefault();
+                        this.navigateToImage(index + 1);
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        this.navigateToImage(index - 1);
                         break;
                 }
             }
         });
         
-        // Close modal when clicking outside image
-        this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal) {
-                this.closeModal();
+        // Global keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowRight':
+                    this.navigateToImage(this.currentImageIndex + 1);
+                    break;
+                case 'ArrowLeft':
+                    this.navigateToImage(this.currentImageIndex - 1);
+                    break;
             }
         });
     }
     
     /**
-     * Open modal with specific image
-     * @param {number} index - Image index to display
+     * Navigate to a specific image with wrap-around
+     * @param {number} index - Target image index
      */
-    openModal(index) {
-        this.currentImageIndex = index;
-        const image = this.images[index];
-        
-        this.modalImage.src = image.src;
-        this.modalImage.alt = image.title;
-        this.modalCaption.innerHTML = `<strong>${image.title}</strong><br>${image.description}`;
-        
-        this.modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        
-        // Focus management for accessibility
-        this.modal.focus();
-    }
-    
-    /**
-     * Close the modal
-     */
-    closeModal() {
-        this.modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-    
-    /**
-     * Navigate to next/previous image in modal
-     * @param {number} direction - 1 for next, -1 for previous
-     */
-    navigateModal(direction) {
-        this.currentImageIndex += direction;
-        
-        // Wrap around navigation
-        if (this.currentImageIndex >= this.images.length) {
-            this.currentImageIndex = 0;
-        } else if (this.currentImageIndex < 0) {
-            this.currentImageIndex = this.images.length - 1;
+    navigateToImage(index) {
+        if (index >= this.images.length) {
+            index = 0; // Wrap to first image
+        } else if (index < 0) {
+            index = this.images.length - 1; // Wrap to last image
         }
         
-        const image = this.images[this.currentImageIndex];
-        this.modalImage.src = image.src;
-        this.modalImage.alt = image.title;
-        this.modalCaption.innerHTML = `<strong>${image.title}</strong><br>${image.description}`;
+        this.displayImage(index);
+        
+        // Focus the corresponding thumbnail
+        const thumbnail = this.thumbnailsContainer.querySelector(`[data-index="${index}"]`);
+        if (thumbnail) {
+            thumbnail.focus();
+        }
     }
     
     /**
@@ -223,7 +217,8 @@ class ImageGallery {
     addImage(imageData) {
         if (this.validateImageData(imageData)) {
             this.images.push(imageData);
-            this.renderGallery();
+            this.renderThumbnails();
+            this.displayImage(this.currentImageIndex);
         }
     }
     
@@ -234,7 +229,16 @@ class ImageGallery {
     removeImage(index) {
         if (index >= 0 && index < this.images.length && this.images.length > 2) {
             this.images.splice(index, 1);
-            this.renderGallery();
+            
+            // Adjust current index if necessary
+            if (this.currentImageIndex >= this.images.length) {
+                this.currentImageIndex = this.images.length - 1;
+            } else if (this.currentImageIndex > index) {
+                this.currentImageIndex--;
+            }
+            
+            this.renderThumbnails();
+            this.displayImage(this.currentImageIndex);
         } else {
             console.warn('Cannot remove image: Gallery must maintain at least 2 images');
         }
