@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Modern Image Gallery</h1>
+            <p>A beautiful collection of images</p>
+        </header>
+        
+        <main>
+            <div class="gallery-widget">
+                <!-- Main featured image display -->
+                <div class="main-display">
+                    <img id="main-image" class="main-image" alt="Featured image">
+                    <div class="main-image-info">
+                        <h2 id="main-title" class="main-title"></h2>
+                        <p id="main-description" class="main-description"></p>
+                    </div>
+                </div>
+                
+                <!-- Thumbnail navigation -->
+                <div class="thumbnail-container">
+                    <div id="thumbnails" class="thumbnails">
+                        <!-- Thumbnail images will be dynamically generated here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
