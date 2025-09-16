@@ -10,32 +10,32 @@ class ImageGallery {
             {
                 src: 'images/01-homepage-1024.png',
                 title: 'Homepage Design',
-                description: 'A modern and clean homepage layout showcasing professional web design principles with intuitive navigation and engaging visual elements.'
+                description: '<p>A modern and clean homepage layout showcasing professional web design principles with intuitive navigation and engaging visual elements. Features a responsive design approach with carefully crafted typography, strategic use of whitespace, and a cohesive color palette that creates a welcoming first impression.</p><p>The layout incorporates contemporary UI patterns including hero sections, call-to-action buttons, and optimized content hierarchy that guides users seamlessly through the site experience.</p>'
             },
             {
                 src: 'images/02-projects-1024.png',
                 title: 'Projects Overview',
-                description: 'A comprehensive projects gallery displaying various development works, featuring responsive grid layouts and interactive project cards.'
+                description: '<p>A comprehensive projects gallery displaying various development works, featuring responsive grid layouts and interactive project cards with hover effects and smooth transitions. Each project card includes thumbnail previews, concise descriptions, and technology stack indicators.</p><p>The design provides visitors with a clear understanding of the scope and technical complexity of each work, while the layout adapts fluidly across different screen sizes maintaining visual consistency and optimal readability.</p>'
             },
             {
                 src: 'images/03-project-1024.png',
                 title: 'Project Details',
-                description: 'Detailed project showcase page highlighting technical specifications, development process, and key features of individual projects.'
+                description: '<p>Detailed project showcase page highlighting technical specifications, development process, and key features of individual projects with comprehensive documentation and visual examples. Includes code snippets, architecture diagrams, and performance metrics showcasing the technical depth of each implementation.</p><p>The page structure facilitates easy navigation between different aspects of the project while providing in-depth technical insights for fellow developers and potential collaborators interested in the implementation details and challenges overcome.</p>'
             },
             {
                 src: 'images/04-contact-1024.png',
                 title: 'Contact Page',
-                description: 'Professional contact interface with interactive forms, social media links, and clear communication channels for client engagement.'
+                description: '<p>Professional contact interface with interactive forms, social media links, and clear communication channels for client engagement and professional networking opportunities. Features comprehensive form validation, accessibility considerations, and multiple contact methods including email, social platforms, and professional networks.</p><p>The design emphasizes trust and professionalism while maintaining user-friendly interaction patterns and providing clear feedback for form submissions and inquiries, ensuring seamless communication flow.</p>'
             },
             {
                 src: 'images/05-widget-1024.png',
                 title: 'Widget Component',
-                description: 'Interactive widget demonstration showcasing dynamic functionality, user interface components, and responsive design elements.'
+                description: '<p>Interactive widget demonstration showcasing dynamic functionality, user interface components, and responsive design elements with real-time data updates and smooth animations. Demonstrates advanced JavaScript capabilities, API integrations, and modern frontend frameworks working together.</p><p>The component includes comprehensive error handling, loading states, and accessibility features that ensure robust performance across different browsers and devices, providing engaging user experiences regardless of platform.</p>'
             },
             {
                 src: 'images/06-gallery-1024.png',
                 title: 'Gallery View',
-                description: 'Image gallery interface displaying the current gallery widget in action with thumbnail navigation and main image display area.'
+                description: '<p>Image gallery interface displaying the current gallery widget in action with thumbnail navigation, main image display area, and interactive controls for seamless browsing experience. Features keyboard navigation support, touch gestures for mobile devices, and lazy loading for optimal performance.</p><p>The implementation demonstrates best practices in web accessibility, performance optimization, and responsive design patterns suitable for showcasing visual content across various contexts and device types.</p>'
             }
         ];
         
@@ -121,7 +121,7 @@ class ImageGallery {
             this.mainImage.src = image.src;
             this.mainImage.alt = image.title;
             this.mainTitle.textContent = image.title;
-            this.mainDescription.textContent = image.description;
+            this.mainDescription.innerHTML = image.description;
             this.mainImage.style.opacity = '1';
         }, 150);
         
