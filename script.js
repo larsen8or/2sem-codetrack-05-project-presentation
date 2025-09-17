@@ -26,13 +26,49 @@ class ImageGallery {
     constructor(containerElement, images) {
         // Validate that we have a valid container element
         if (!containerElement) {
-            throw new Error('ImageGallery requires a container element');
+            throw new Error('ImageGallery requires a container element', {
+                cause: {
+                    type: 'MISSING_CONTAINER_ERROR',
+                    providedValue: containerElement
+                }
+            });
         }
 
         // Validate that we have valid image data
         if (!images || !Array.isArray(images) || images.length < 2) {
-            throw new Error('ImageGallery requires an array of at least 2 images');
+            throw new Error('ImageGallery requires an array of at least 2 images', {
+                cause: {
+                    type: 'INVALID_IMAGES_ERROR',
+                    providedValue: images,
+                    isArray: Array.isArray(images),
+                    length: images ? images.length : 0
+                }
+            });
         }
+
+        // Validate each individual image object with detailed error reporting
+        images.forEach((imageData, index) => {
+            // Check if image data has all required properties: src, title, and description as strings
+            if (
+              !imageData ||
+              typeof imageData.src !== 'string' ||
+              typeof imageData.title !== 'string' ||
+              typeof imageData.description !== 'string'
+            ) {
+                throw new Error(`Invalid image data at index ${index}. Each image must have src, title, and description properties.`, {
+                    cause: {
+                        type: 'IMAGE_VALIDATION_ERROR',
+                        imageIndex: index,
+                        imageData: imageData,
+                        hasValidStructure: {
+                            hasSrc: typeof imageData?.src === 'string',
+                            hasTitle: typeof imageData?.title === 'string',
+                            hasDescription: typeof imageData?.description === 'string'
+                        }
+                    }
+                });
+            }
+        });
 
         // Store the container and images for this gallery instance
         this.container = containerElement;
@@ -49,7 +85,18 @@ class ImageGallery {
 
         // Make sure all required elements exist in the HTML
         if (!this.mainImage || !this.mainTitle || !this.mainDescription || !this.thumbnailsContainer) {
-            throw new Error('ImageGallery container must contain required elements: .main-image, .main-title, .main-description, .thumbnails');
+            throw new Error('ImageGallery container must contain required elements: .main-image, .main-title, .main-description, .thumbnails', {
+                cause: {
+                    type: 'MISSING_ELEMENTS_ERROR',
+                    containerElement: containerElement,
+                    foundElements: {
+                        mainImage: !!this.mainImage,
+                        mainTitle: !!this.mainTitle,
+                        mainDescription: !!this.mainDescription,
+                        thumbnailsContainer: !!this.thumbnailsContainer
+                    }
+                }
+            });
         }
 
         // Initialize the gallery after everything is validated
@@ -190,46 +237,5 @@ class ImageGallery {
                 this.showImage(imageIndex);
             }
         });
-    }
-    
-    /**
-     * Navigate to a different image with automatic wrapping
-     * (This method is included for potential future features like arrow buttons)
-     *
-     * @param {number} targetIndex - Which image to navigate to
-     */
-    navigateToImage(targetIndex) {
-        // Handle wrapping: if we go past the last image, go to first image
-        if (targetIndex >= this.images.length) {
-            targetIndex = 0;
-        }
-        
-        // Handle wrapping: if we go before the first image, go to last image
-        if (targetIndex < 0) {
-            targetIndex = this.images.length - 1;
-        }
-
-        // Show the target image
-        this.showImage(targetIndex);
-
-        // Focus the corresponding thumbnail for accessibility
-        const targetThumbnail = this.thumbnailsContainer.querySelector(`[data-index="${targetIndex}"]`);
-        if (targetThumbnail) {
-            targetThumbnail.focus();
-        }
-    }
-
-    /**
-     * Validate that an image object has all required properties
-     * (Helper method for data validation)
-     *
-     * @param {Object} imageData - The image object to validate
-     * @returns {boolean} True if the image data is valid, false otherwise
-     */
-    isValidImageData(imageData) {
-        return imageData &&
-               typeof imageData.src === 'string' && 
-               typeof imageData.title === 'string' && 
-               typeof imageData.description === 'string';
     }
 }
