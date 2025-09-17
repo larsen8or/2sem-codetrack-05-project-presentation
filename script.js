@@ -26,26 +26,25 @@ class ImageGallery {
     constructor(containerElement, images) {
         // Validate that we have a valid container element
         if (!containerElement) {
-            throw new Error('ImageGallery requires a container element', {
-                cause: {
+            this.throwErrorWithContext(
+                'ImageGallery requires a container element',
+                {
                     type: 'MISSING_CONTAINER_ERROR',
                     providedValue: containerElement,
-                },
-            });
+                }
+            );
         }
 
         // Validate that we have valid image data
         if (!images || !Array.isArray(images) || images.length < 2) {
-            throw new Error(
+            this.throwErrorWithContext(
                 'ImageGallery requires an array of at least 2 images',
                 {
-                    cause: {
-                        type: 'INVALID_IMAGES_ERROR',
-                        providedValue: images,
-                        isArray: Array.isArray(images),
-                        length: images ? images.length : 0,
-                    },
-                },
+                    type: 'INVALID_IMAGES_ERROR',
+                    providedValue: images,
+                    isArray: Array.isArray(images),
+                    length: images ? images.length : 0,
+                }
             );
         }
 
@@ -58,20 +57,18 @@ class ImageGallery {
                 typeof imageData.title !== 'string' ||
                 typeof imageData.description !== 'string'
             ) {
-                throw new Error(
+                this.throwErrorWithContext(
                     `Invalid image data at index ${index}. Each image must have src, title, and description properties.`,
                     {
-                        cause: {
-                            type: 'IMAGE_VALIDATION_ERROR',
-                            imageIndex: index,
-                            imageData: imageData,
-                            hasValidStructure: {
-                                hasSrc: typeof imageData?.src === 'string',
-                                hasTitle: typeof imageData?.title === 'string',
-                                hasDescription: typeof imageData?.description === 'string',
-                            },
+                        type: 'IMAGE_VALIDATION_ERROR',
+                        imageIndex: index,
+                        imageData: imageData,
+                        hasValidStructure: {
+                            hasSrc: typeof imageData?.src === 'string',
+                            hasTitle: typeof imageData?.title === 'string',
+                            hasDescription: typeof imageData?.description === 'string',
                         },
-                    },
+                    }
                 );
             }
         });
@@ -96,20 +93,18 @@ class ImageGallery {
             || !this.mainDescription
             || !this.thumbnailsContainer
         ) {
-            throw new Error(
+            this.throwErrorWithContext(
                 'ImageGallery container must contain required elements: .main-image, .main-title, .main-description, .thumbnails',
                 {
-                    cause: {
-                        type: 'MISSING_ELEMENTS_ERROR',
-                        containerElement: containerElement,
-                        foundElements: {
-                            mainImage: !!this.mainImage,
-                            mainTitle: !!this.mainTitle,
-                            mainDescription: !!this.mainDescription,
-                            thumbnailsContainer: !!this.thumbnailsContainer,
-                        },
+                    type: 'MISSING_ELEMENTS_ERROR',
+                    containerElement: containerElement,
+                    foundElements: {
+                        mainImage: !!this.mainImage,
+                        mainTitle: !!this.mainTitle,
+                        mainDescription: !!this.mainDescription,
+                        thumbnailsContainer: !!this.thumbnailsContainer,
                     },
-                },
+                }
             );
         }
 
@@ -251,5 +246,18 @@ class ImageGallery {
                 this.showImage(imageIndex);
             }
         });
+    }
+
+    /**
+     * Throws an error with structured context logging
+     * This method centralizes error creation and logging for consistency
+     *
+     * @param {string} message - Human-readable error message
+     * @param {Object} context - Structured error context for debugging
+     * @throws {Error} Always throws an Error with the provided message and context as cause
+     */
+    throwErrorWithContext(message, context) {
+        console.error('Error Context', context);
+        throw new Error(message, { cause: context });
     }
 }
