@@ -1,45 +1,104 @@
-# Modern Image Gallery
+# Modern Image Gallery Widget
 
-A simple, standalone HTML image gallery built with vanilla HTML, CSS, and JavaScript.
+A reusable JavaScript class that creates an interactive image gallery with thumbnails and a main display area. Perfect for showcasing project portfolios or image collections.
 
 ## Features
 
-- **Modern, UX-friendly design** with clean cards layout
-- **Responsive design** that works on desktop and mobile
-- **Modal view** for full-size image viewing
-- **Navigation controls** with previous/next buttons
-- **Keyboard support** (Arrow keys, Escape to close)
-- **Accessibility features** with proper ARIA labels and focus management
-- **Easily maintainable** through JavaScript image array
-- **No external dependencies** - works offline
+- **Click thumbnails to view different images** - Interactive thumbnail navigation
+- **Smooth fade transitions between images** - Professional animations
+- **Multi-paragraph HTML descriptions** - Rich text support with HTML formatting
+- **Fully responsive design** - Works seamlessly on desktop and mobile
+- **Multiple galleries on one page** - Each gallery operates independently
+- **Modern Error handling** - Comprehensive validation with detailed error context
+- **Accessibility features** - ARIA labels, keyboard focus, and screen reader support
+- **No external dependencies** - Pure vanilla JavaScript, works offline
 
-## How to Use
+## Quick Start
 
-1. Open `index.html` in any modern web browser
-2. Click on any image to view it in full size
-3. Use navigation buttons or arrow keys to browse through images
-4. Press Escape or click the X to close the modal
+1. Include the CSS and JavaScript files in your HTML
+2. Create the gallery HTML structure
+3. Initialize the gallery with your images
 
-## Adding New Images
+```html
+<div class="gallery-widget" id="my-gallery">
+    <div class="main-display">
+        <div class="main-image-wrapper">
+            <img class="main-image" alt="Featured image">
+        </div>
+        <div class="main-image-info">
+            <h2 class="main-title"></h2>
+            <div class="main-description"></div>
+        </div>
+    </div>
+    
+    <div class="thumbnail-container">
+        <div class="thumbnails">
+            <!-- Thumbnails generated automatically -->
+        </div>
+    </div>
+</div>
+```
 
-To add new images, simply edit the `images` array in `script.js`:
+## Adding Images
+
+Initialize the gallery by passing a container element and your images array:
 
 ```javascript
-this.images = [
+// Define your images
+const myImages = [
     {
-        src: 'path/to/your/image.jpg',
-        title: 'Your Image Title',
-        description: 'Your image description here.'
+        src: 'images/01-homepage-1024.png',
+        title: 'Homepage Design',
+        description: '<p>A modern homepage layout with clean design.</p><p>Features responsive elements and intuitive navigation.</p>'
+    },
+    {
+        src: 'images/02-projects-1024.png',
+        title: 'Projects Overview',
+        description: '<p>Comprehensive project gallery showcase.</p><p>Interactive cards with hover effects.</p>'
     },
     // Add more images...
 ];
+
+// Initialize the gallery
+const gallery = new ImageGallery(
+    document.getElementById('my-gallery'),
+    myImages
+);
 ```
 
-## Requirements Met
+## Multiple Galleries
 
-- ✅ Standalone HTML page with vanilla HTML, CSS, and JavaScript
-- ✅ Simple and UX-friendly gallery design
-- ✅ Images with descriptions for each
-- ✅ Maintained through JavaScript array
-- ✅ Supports minimum 2 images and scales to unlimited
-- ✅ Modern, maintainable code structure
+You can create multiple independent galleries on the same page:
+
+```javascript
+// First gallery
+const gallery1 = new ImageGallery(
+    document.getElementById('gallery1'),
+    portfolioImages
+);
+
+// Second gallery with different images
+const gallery2 = new ImageGallery(
+    document.getElementById('gallery2'),
+    productImages
+);
+```
+
+## Image Format
+
+Each image object must contain:
+- **src** (string): Path to the image file
+- **title** (string): Display title for the image
+- **description** (string): HTML description supporting multiple paragraphs
+
+## Error Handling
+
+The gallery provides detailed error messages if:
+- Container element is missing
+- Images array is invalid or has fewer than 2 images
+- Individual image objects are missing required properties
+- Required HTML elements are not found in the container
+
+## Browser Support
+
+- All major browsers: Chrome, Firefox, Safari, Edge
