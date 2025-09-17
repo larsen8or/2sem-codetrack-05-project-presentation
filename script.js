@@ -29,44 +29,50 @@ class ImageGallery {
             throw new Error('ImageGallery requires a container element', {
                 cause: {
                     type: 'MISSING_CONTAINER_ERROR',
-                    providedValue: containerElement
-                }
+                    providedValue: containerElement,
+                },
             });
         }
 
         // Validate that we have valid image data
         if (!images || !Array.isArray(images) || images.length < 2) {
-            throw new Error('ImageGallery requires an array of at least 2 images', {
-                cause: {
-                    type: 'INVALID_IMAGES_ERROR',
-                    providedValue: images,
-                    isArray: Array.isArray(images),
-                    length: images ? images.length : 0
-                }
-            });
+            throw new Error(
+                'ImageGallery requires an array of at least 2 images',
+                {
+                    cause: {
+                        type: 'INVALID_IMAGES_ERROR',
+                        providedValue: images,
+                        isArray: Array.isArray(images),
+                        length: images ? images.length : 0,
+                    },
+                },
+            );
         }
 
         // Validate each individual image object with detailed error reporting
         images.forEach((imageData, index) => {
             // Check if image data has all required properties: src, title, and description as strings
             if (
-              !imageData ||
-              typeof imageData.src !== 'string' ||
-              typeof imageData.title !== 'string' ||
-              typeof imageData.description !== 'string'
+                !imageData ||
+                typeof imageData.src !== 'string' ||
+                typeof imageData.title !== 'string' ||
+                typeof imageData.description !== 'string'
             ) {
-                throw new Error(`Invalid image data at index ${index}. Each image must have src, title, and description properties.`, {
-                    cause: {
-                        type: 'IMAGE_VALIDATION_ERROR',
-                        imageIndex: index,
-                        imageData: imageData,
-                        hasValidStructure: {
-                            hasSrc: typeof imageData?.src === 'string',
-                            hasTitle: typeof imageData?.title === 'string',
-                            hasDescription: typeof imageData?.description === 'string'
-                        }
-                    }
-                });
+                throw new Error(
+                    `Invalid image data at index ${index}. Each image must have src, title, and description properties.`,
+                    {
+                        cause: {
+                            type: 'IMAGE_VALIDATION_ERROR',
+                            imageIndex: index,
+                            imageData: imageData,
+                            hasValidStructure: {
+                                hasSrc: typeof imageData?.src === 'string',
+                                hasTitle: typeof imageData?.title === 'string',
+                                hasDescription: typeof imageData?.description === 'string',
+                            },
+                        },
+                    },
+                );
             }
         });
 
@@ -84,25 +90,33 @@ class ImageGallery {
         this.thumbnailsContainer = this.container.querySelector('.thumbnails');
 
         // Make sure all required elements exist in the HTML
-        if (!this.mainImage || !this.mainTitle || !this.mainDescription || !this.thumbnailsContainer) {
-            throw new Error('ImageGallery container must contain required elements: .main-image, .main-title, .main-description, .thumbnails', {
-                cause: {
-                    type: 'MISSING_ELEMENTS_ERROR',
-                    containerElement: containerElement,
-                    foundElements: {
-                        mainImage: !!this.mainImage,
-                        mainTitle: !!this.mainTitle,
-                        mainDescription: !!this.mainDescription,
-                        thumbnailsContainer: !!this.thumbnailsContainer
-                    }
-                }
-            });
+        if (
+            !this.mainImage
+            || !this.mainTitle
+            || !this.mainDescription
+            || !this.thumbnailsContainer
+        ) {
+            throw new Error(
+                'ImageGallery container must contain required elements: .main-image, .main-title, .main-description, .thumbnails',
+                {
+                    cause: {
+                        type: 'MISSING_ELEMENTS_ERROR',
+                        containerElement: containerElement,
+                        foundElements: {
+                            mainImage: !!this.mainImage,
+                            mainTitle: !!this.mainTitle,
+                            mainDescription: !!this.mainDescription,
+                            thumbnailsContainer: !!this.thumbnailsContainer,
+                        },
+                    },
+                },
+            );
         }
 
         // Initialize the gallery after everything is validated
         this.init();
     }
-    
+
     /**
      * Initialize the gallery by setting up thumbnails, displaying first image, and adding event listeners
      * This method is called automatically when creating a new gallery instance
@@ -120,14 +134,14 @@ class ImageGallery {
     createThumbnails() {
         // Clear any existing thumbnails first
         this.thumbnailsContainer.innerHTML = '';
-        
+
         // Create a thumbnail for each image in our collection
         this.images.forEach((imageData, index) => {
             const thumbnailElement = this.buildThumbnail(imageData, index);
             this.thumbnailsContainer.appendChild(thumbnailElement);
         });
     }
-    
+
     /**
      * Build a single thumbnail element with image and accessibility attributes
      *
@@ -159,7 +173,7 @@ class ImageGallery {
 
         return thumbnail;
     }
-    
+
     /**
      * Display a specific image in the main gallery area with a smooth fade effect
      *
@@ -176,10 +190,10 @@ class ImageGallery {
 
         // Update our current image tracker
         this.currentImageIndex = index;
-        
+
         // Start fade out effect by making image semi-transparent
         this.mainImage.style.opacity = '0.5';
-        
+
         // After a short delay, update the content and fade back in
         setTimeout(() => {
             // Update the main image
@@ -197,7 +211,7 @@ class ImageGallery {
         // Update which thumbnail appears active
         this.updateThumbnailStyles();
     }
-    
+
     /**
      * Update the visual appearance of thumbnails to show which one is currently active
      * The active thumbnail gets special styling to indicate it's the current image
@@ -219,7 +233,7 @@ class ImageGallery {
             }
         });
     }
-    
+
     /**
      * Set up event listeners for thumbnail clicks
      * This enables users to click on thumbnails to view different images
